@@ -1,10 +1,10 @@
 #include "monty.h"
 /**
- * div - divides the second top element of the stack by the top element
+ * op_div - divides the second top element of the stack by the top element
  * @stack: pointer to the stack
  * @line_number: line number where the opcode appears
  */
-void div(stack_t **stack, unsigned int line_number)
+void op_div(stack_t **stack, unsigned int line_number)
 {
 	if (*stack && (*stack)->next)
 	{
@@ -23,11 +23,11 @@ void div(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * mul - multiplies the top two elements of the stack
+ * op_mul - multiplies the top two elements of the stack
  * @stack: pointer to the stack
  * @line_number: line number where the opcode appears
  */
-void mul(stack_t **stack, unsigned int line_number)
+void op_mul(stack_t **stack, unsigned int line_number)
 {
 	if (*stack && (*stack)->next)
 	{
@@ -41,11 +41,11 @@ void mul(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * mod - computes the modulus of the second top element by the top element
+ * op_mod - computes the modulus of the second top element by the top element
  * @stack: pointer to the stack
  * @line_number: line number where the opcode appears
  */
-void mod(stack_t **stack, unsigned int line_number)
+void op_mod(stack_t **stack, unsigned int line_number)
 {
 	if (*stack && (*stack)->next)
 	{

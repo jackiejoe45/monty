@@ -1,5 +1,5 @@
 #include "monty.h"
-
+#include <stdio.h>
 /**
  * push - pushes an element onto the stack
  * @stack: pointer to the stack
@@ -7,27 +7,32 @@
  */
 void push(stack_t **stack, unsigned int line_number)
 {
-	if (line_number == 0)
-	{
-		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
+        stack_t *new_node;
+        char line_number_str[32]; 
 
-	stack_t *new_node = malloc(sizeof(stack_t));
+        if (line_number == 0)
+        {
+                fprintf(stderr, "L%d: usage: push integer\n", line_number);
+                exit(EXIT_FAILURE);
+        }
 
-	if (!new_node)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-	new_node->n = atoi(line_number);
-	new_node->prev = NULL;
-	new_node->next = *stack;
-	if (*stack)
-		(*stack)->prev = new_node;
-	*stack = new_node;
+	sprintf(line_number_str, "%u", line_number);
+
+        new_node = malloc(sizeof(stack_t));
+
+        if (!new_node)
+        {
+                fprintf(stderr, "Error: malloc failed\n");
+                exit(EXIT_FAILURE);
+        }
+        
+        new_node->n = atoi(line_number_str);
+        new_node->prev = NULL;
+        new_node->next = *stack;
+        if (*stack)
+                (*stack)->prev = new_node;
+        *stack = new_node;
 }
-
 
 /**
  * pall - prints all elements in the stack
@@ -36,8 +41,10 @@ void push(stack_t **stack, unsigned int line_number)
  */
 void pall(stack_t **stack, unsigned int line_number)
 {
+	stack_t *current;
+
 	(void)line_number;
-	stack_t *current = *stack;
+	current = *stack;
 
 	while (current)
 	{
@@ -71,9 +78,10 @@ void pint(stack_t **stack, unsigned int line_number)
  */
 void pop(stack_t **stack, unsigned int line_number)
 {
+	stack_t *temp;
 	if (*stack)
 	{
-		stack_t *temp = *stack;
+		temp = *stack;
 		*stack = (*stack)->next;
 		if (*stack)
 			(*stack)->prev = NULL;

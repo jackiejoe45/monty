@@ -1,17 +1,41 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "monty.h"
-
+/**
+*
+  *
+  */
 int main(int argc, char *argv[])
 {
+	FILE *file;
+	stack_t *stack;
+	char *line;
+	size_t i;
+	int found;
+	instruction_t instructions[] = {
+		{"push", push},
+		{"pop", pop},
+		{"pall", pall},
+		{"pint", pint},
+		{"swap", swap},
+		{"nop", nop},
+		{"add", op_add}, 
+		{"sub", op_sub}, 
+		{"div", op_div}, 
+		{"mul", op_mul}, 
+		{"mod", op_mod}, 
+		{NULL, NULL}
+	};
+	int line_number = 0; 
+	/* size_t line_size = 0; */ 
+	char opcode[32];
+        char argument[64];
+
 	if (argc != 3)
 	{
 		fprintf(stderr, "Usage: %s <monty> <file>\n", argv[0]);
 		return (EXIT_FAILURE);
 	}
 
-	FILE *file = fopen(argv[2], "r");
+	file = fopen(argv[2], "r");
 
 	if (!file)
 	{
@@ -19,46 +43,21 @@ int main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	}
 
-	stack_t *stack = NULL;
+	stack = NULL;
+	line = NULL;
 
-
-	instruction_t instructions[] = {
-		{"push", push},
-		{"pop", pop},
-		{"pall", pall},
-		{"pint", pint},
-		{"swap", swap},
-		{"nop", op_nop},
-		{"add", op_add},
-		{"sub", op_sub},
-		{"div", op_div},
-		{"mul", op_mul},
-		{"mod", op_mod},
-		{NULL, NULL}
-	};
-
-	char *line = NULL;
-	size_t line_size = 0;
-	ssize_t read;
-
-	while ((read = getline(&line, &line_size, file)) != -1)
+	while (fgets(line, sizeof(line), file))
 	{
-		char *opcode = strtok(line, " \t\n");
+		line_number++;
 
-		if (opcode == NULL || opcode[0] == '#')
-		{
-			continue;
-		}
+		sscanf(line, "%31s %63s", opcode, argument);
 
-		int found = 0;
-
-		for (size_t i = 0; instructions[i].opcode[0]; ++i)
+		found = 0;
+		for (i = 0; instructions[i].opcode; i++)
 		{
 			if (strcmp(instructions[i].opcode, opcode) == 0)
 			{
-				char *arg = strtok(NULL, " \t\n");
-
-				instructions[i].f(&stack, arg ? atoi(arg) : 0);
+				instructions[i].f(&stack, atoi(argument)); 
 				found = 1;
 				break;
 			}
@@ -68,6 +67,15 @@ int main(int argc, char *argv[])
 		{
 			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 			fclose(file);
+			free(line);
+			return (EXIT_FAILURE);
+		}
+
+		if (stack == NULL) 
+		{ 
+			fprintf(stderr, "Error: malloc failed\n");
+			fclose(file); 
+			free(line);
 			return (EXIT_FAILURE);
 		}
 	}
@@ -75,6 +83,12 @@ int main(int argc, char *argv[])
 	fclose(file);
 	free(line);
 
+	while (stack != NULL)
+	{
+		stack_t *temp = stack;
+		stack = stack->next;
+		free(temp);
+	}
 	return (EXIT_SUCCESS);
 }
 

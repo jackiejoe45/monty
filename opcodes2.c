@@ -6,9 +6,10 @@
  */
 void swap(stack_t **stack, unsigned int line_number)
 {
+	int temp;
 	if (*stack && (*stack)->next)
 	{
-		int temp = (*stack)->n;
+		temp = (*stack)->n;
 		(*stack)->n = (*stack)->next->n;
 		(*stack)->next->n = temp;
 	} else
@@ -19,11 +20,11 @@ void swap(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * add - adds the top two elements of the stack
+ * op_add - adds the top two elements of the stack
  * @stack: pointer to the stack
  * @line_number: line number where the opcode appears
  */
-void add(stack_t **stack, unsigned int line_number)
+void op_add(stack_t **stack, unsigned int line_number)
 {
 	if (*stack && (*stack)->next)
 	{
@@ -49,11 +50,11 @@ void nop(stack_t **stack, unsigned int line_number)
 
 
 /**
- * sub - subtracts the top element from the second top element
+ * op_sub - subtracts the top element from the second top element
  * @stack: pointer to the stack
  * @line_number: line number where the opcode appears
  */
-void sub(stack_t **stack, unsigned int line_number)
+void op_sub(stack_t **stack, unsigned int line_number)
 {
 	if (*stack && (*stack)->next)
 	{
