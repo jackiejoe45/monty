@@ -35,6 +35,12 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+int exec_in(char *opcode, char *argument, stack_t **stack, int line_number);
+void handle_execution_error(FILE *file, char *line, stack_t **stack);
+void handle_invalid_format(FILE *file, char *line, stack_t **stack);
+
+void print_usage_and_exit(const char *program_name);
+FILE *open_file(const char *filename, const char *mode);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
@@ -46,5 +52,6 @@ void op_sub(stack_t **stack, unsigned int line_number);
 void op_div(stack_t **stack, unsigned int line_number);
 void op_mul(stack_t **stack, unsigned int line_number);
 void op_mod(stack_t **stack, unsigned int line_number);
+
 
 #endif /*MONTY_H*/
