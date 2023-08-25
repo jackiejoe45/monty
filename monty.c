@@ -43,9 +43,9 @@ int exec_in(char *opcode, char *argument, stack_t **stack, int line_number)
  * print_usage_and_exit - Prints usage message and exits with failure status
  * @program_name: The name of the program
  */
-void print_usage_and_exit(const char *program_name)
+void print_usage_and_exit()
 {
-	fprintf(stderr, "Usage: %s <file>\n", program_name);
+	fprintf(stderr, "Usage: monty file\n");
 	exit(EXIT_FAILURE);
 }
 
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 	char argument[64];
 
 	if (argc != 2)
-		print_usage_and_exit(argv[1]);
+		print_usage_and_exit();
 	file = open_file(argv[1], "r");
 	stack = NULL;
 	line = NULL;
