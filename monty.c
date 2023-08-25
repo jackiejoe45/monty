@@ -45,7 +45,7 @@ int exec_in(char *opcode, char *argument, stack_t **stack, int line_number)
  */
 void print_usage_and_exit(const char *program_name)
 {
-	fprintf(stderr, "Usage: %s <monty> <file>\n", program_name);
+	fprintf(stderr, "Usage: %s <file>\n", program_name);
 	exit(EXIT_FAILURE);
 }
 
