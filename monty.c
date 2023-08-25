@@ -82,9 +82,9 @@ int main(int argc, char *argv[])
 	char opcode[32];
 	char argument[64];
 
-	if (argc != 3)
+	if (argc != 2)
 		print_usage_and_exit(argv[0]);
-	file = open_file(argv[2], "r");
+	file = open_file(argv[1], "r");
 	stack = NULL;
 	line = NULL;
 	line_number = 0;
