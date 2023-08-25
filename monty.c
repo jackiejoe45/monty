@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 	char argument[64];
 
 	if (argc != 2)
-		print_usage_and_exit(argv[0]);
+		print_usage_and_exit(argv[1]);
 	file = open_file(argv[1], "r");
 	stack = NULL;
 	line = NULL;
